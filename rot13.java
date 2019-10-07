@@ -50,7 +50,7 @@ public class rot13{
         return s;
     }
 
-    public static boolean check(File file_to_read,File file_to_write){
+    public static boolean check(File file_to_read,File file_to_write) throws Exception{
 
         if(!file_to_write.exists()){
             file_to_write.createNewFile();
@@ -58,8 +58,7 @@ public class rot13{
         else{
             return true;
         }
-        
-        //Exception for wrong input
+    
         if(!file_to_read.exists()){
             throw new Exception("Input file does not exists");
         }
@@ -68,25 +67,26 @@ public class rot13{
         }
     }
 
-    public static void encrypt_read_write(File file_to_read,File file_to_write){
+    public static void encrypt_read_write(File file_to_read,File file_to_write) throws Exception {
         String encrypted = "";
         BufferedReader br = new BufferedReader(new FileReader(file_to_read));
         String x;
         FileWriter fw = new FileWriter(file_to_write);
         while((x=br.readLine()) != null)
             encrypted += rot13.encryption(x) + "\n";
+        
         fw.write(encrypted + "\n");
         fw.close();
     }
 
-    public static void decrypt_read_write(File file_to_read,File file_to_write) {
+    public static void decrypt_read_write(File file_to_read,File file_to_write) throws Exception {
         String decrypted = "";
         BufferedReader br = new BufferedReader(new FileReader(file_to_read));
         String x;
         FileWriter fw = new FileWriter(file_to_write);
         while((x=br.readLine()) != null)
             decrypted += rot13.decryption(x) + "\n";
-        fw.write(encrypted + "\n");
+        fw.write(decrypted + "\n");
         fw.close();
     }
     
@@ -96,23 +96,20 @@ public class rot13{
         Scanner sc = new Scanner(System.in);
         String inputFile = args[0];
         String outputFile = args[1];
-        String operation = args[2];
         File file_to_read = new File(inputFile);
         File file_to_write = new File(outputFile);
-        
-        if(check()){
-            if(args.length() == 2){
+        if(check(file_to_read,file_to_write)){
+            if(args.length == 2){
                 rot13.encrypt_read_write(file_to_read,file_to_write);
-            }
-            else if(args.length() == 3){
-                if(opeartion == "encrypt"){
+            } else if (args.length == 3) {
+                String operation = args[2];
+                if(operation.equals("encrypt")) {
                     rot13.encrypt_read_write(file_to_read,file_to_write);
-                }
-                else{
+                } else{
                     rot13.decrypt_read_write(file_to_read,file_to_write);
                 }
             }
-        }
+       }
     }
     
 
