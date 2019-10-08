@@ -6,5 +6,5 @@
 ####  args[2] = "Operation to perform Encryption or Decryption(Default state is encryption)"
 
 ### How to Use:
-javac rot13.java 
-java rot13 InputFile OutputFile Operation
+1. javac rot13.java 
+1. java rot13 InputFile OutputFile Operation
